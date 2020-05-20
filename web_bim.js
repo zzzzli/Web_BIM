@@ -8,8 +8,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname));
 
 // This is for web server to start listening to port 3000
-app.set('port', 3000);
-var server = app.listen(app.get('port'), function () {
+var server = app.listen(process.env.PORT || 3000, function () {
     console.log('Server listening on port ' + server.address().port);
 });
 
