@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+.show-env-bg-button {
+  background: red;
+}
+.hide-env-bg-button {
+  background: blue;
+}
