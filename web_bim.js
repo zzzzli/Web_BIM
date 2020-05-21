@@ -4,12 +4,12 @@ var bodyParser = require('body-parser');    // Receive JSON format
 
 // Set up Express web server
 var app = express();
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
 
 // This is for web server to start listening to port 3000
-var server = app.listen(process.env.PORT || 3000, function () {
-    console.log('Server listening on port ' + server.address().port);
+app.listen(process.env.PORT || 3000, function () {
+    console.log('Server listening on port 3000');
 });
 
 //-------------------------------------------------------------------
@@ -25,6 +25,16 @@ const querystring = require('querystring'); // convert our data to the required 
 
 // Axios.defaults.maxContentLength = Infinity;
 // Axios.defaults.maxBodyLength = Infinity;
+
+app.get("/", function(req, res){
+  res.sendFile(__dirname + "/index.html");
+})
+
+app.post("/viewer.html", function(req, res){
+  console.log(req.body.attr);
+  console.log(req.body.threshold);
+  console.log(req.url);
+})
 
 // Route /api/forge/oauth/public
 app.get('/api/forge/oauth/public', function (req, res) {
@@ -44,8 +54,8 @@ app.get('/api/forge/oauth/public', function (req, res) {
     })
         .then(function (response) {
             // Success
-            console.log("token to viewer");
-            console.log(response);
+            // console.log("token to viewer");
+            // console.log(response);
             res.json({ access_token: response.data.access_token, expires_in: response.data.expires_in });
         })
         .catch(function (error) {

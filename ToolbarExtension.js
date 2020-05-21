@@ -29,7 +29,15 @@ ToolbarExtension.prototype.createUI = function() {
   var button1 = new Autodesk.Viewing.UI.Button('show-env-bg-button');
   button1.onClick = function(e) {
 
-    var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction);
+    var attr = document.getElementById("attr").value;
+    var thres = parseInt(document.getElementById("threshold").value);
+    // console.log(attr);
+    // console.log(thres);
+    // console.log(typeof(attr));
+    // console.log(typeof(thres));
+    var userData = [attr, thres];
+
+    var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue){
       if (!retValue) {
         console.log("Model doesn't contain property 'R0'.");
@@ -39,14 +47,16 @@ ToolbarExtension.prototype.createUI = function() {
       var red = new THREE.Vector4(1, 0, 0, 0.5);
       var green = new THREE.Vector4(0, 0.5, 0, 0.5);
       var blue = new THREE.Vector4(0, 0, 0.5, 0.5);
+      
+      viewer.clearThemingColors();
 
       for (var i = 0; i < retValue.length; i++) {
         var R0Id = retValue[i].id;
         var roomName = retValue[i].name;
 
         // viewer.select(R0Id);
-        viewer.toggleVisibility(R0Id);
-        viewer.fitToView(R0Id);
+        // viewer.toggleVisibility(R0Id);
+        // viewer.fitToView(R0Id);
         viewer.setThemingColor(R0Id, red);
 
         console.log('The room with R0 larger than 30 is ' + roomName + '(dbId: ' + R0Id + ')' + ' with R0:', retValue[i].R0);
@@ -75,20 +85,23 @@ ToolbarExtension.prototype.createUI = function() {
   viewer.toolbar.addControl(this.subToolbar);
 };
 
-function userFunction(pdb) {
+function userFunction(pdb, userData) {
     var attrIdR0 = -1;
     var attrIdName = -1;
+
     // Iterate over all attributes and find the index to the one we are interested in
     pdb.enumAttributes(function(i, attrDef, attrRaw){
         var attrName = attrDef.name;
 
         // Print all ids and names of all the attributes
-        console.log(i);
-        console.log(attrName);
+        // console.log(i);
+        // console.log(attrName);
+        // console.log(document.getElementById("attr").value);
+        // console.log(document.getElementById("threshold").value);
         if (attrName === 'name') {
             attrIdName = i;
         }
-        if (attrName === 'R0') {
+        if (attrName === userData[0]) {
             attrIdR0 = i;
             return true; // to stop iterating over the remaining attributes.
         }
@@ -118,7 +131,7 @@ function userFunction(pdb) {
             if (attrId === attrIdR0) {
                 var value = pdb.getAttrValue(attrId, valId);
                 // R0 larger than 30
-                if (value > 30) {
+                if (value > userData[1]) {
                     res.push({
                       id: dbId,
                       name: dbName,
