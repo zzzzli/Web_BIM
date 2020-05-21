@@ -71,7 +71,15 @@
       <label for="exampleFormControlTextarea1">Threshold</label>
       <input type="text" class="form-control" id="threshold">
     </div>
-    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
+    <button class="btn btn-primary" id="highlightAttr">Submit</button>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea2">Room</label>
+      <input type="text" class="form-control" id="room">
+    </div>
+
+    <button class="btn btn-primary" id="findRoom">Submit</button>
   <!-- </form> -->
 
   <!-- viewer -->
@@ -85,7 +93,8 @@
   <!-- Viewer script -->
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <script src="viewer.js" charset="utf-8"></script>
-  <script src="ToolbarExtension.js"></script>
+  <script src="highlightExtension.js"></script>
+  <script src="findRoomExtension.js"></script>
 </body>
 
 </html>

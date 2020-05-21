@@ -30,12 +30,6 @@ app.get("/", function(req, res){
   res.sendFile(__dirname + "/index.html");
 })
 
-app.post("/viewer.html", function(req, res){
-  console.log(req.body.attr);
-  console.log(req.body.threshold);
-  console.log(req.url);
-})
-
 // Route /api/forge/oauth/public
 app.get('/api/forge/oauth/public', function (req, res) {
     // Limit public token to Viewer read only
