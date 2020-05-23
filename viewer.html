@@ -60,7 +60,7 @@
   <!-- highlight with attributes   -->
   <!-- <form action="./viewer.html" method="post"> -->
     <div class="form-group">
-      <label for="exampleFormControlSelect1">Attributes</label>
+      <label for="Attribute-choice">Attribute</label>
       <select class="form-control" id="attr">
         <option>R0</option>
         <option>Area</option>
@@ -68,8 +68,14 @@
     </div>
 
     <div class="form-group">
-      <label for="exampleFormControlTextarea1">Threshold</label>
-      <input type="text" class="form-control" id="threshold">
+      <label for="Threshold-choice">Threshold</label>
+      <input list="recommended-threshold"type="text" class="form-control" id="threshold">
+
+      <datalist id = "recommended-threshold">
+        <option value="30 (high risk)"></option>
+        <option value="20 (medium risk)"></option>
+        <option value="10 (low risk)"></option>
+      </datalist>
     </div>
 
     <button class="btn btn-primary" id="highlightAttr">Submit</button>
@@ -91,10 +97,13 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
   <!-- Viewer script -->
+  <!-- <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/6.*/viewer3D.min.js"></script> -->
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <script src="viewer.js" charset="utf-8"></script>
   <script src="highlightExtension.js"></script>
   <script src="findRoomExtension.js"></script>
+  <script src="selectiveExplode.js"></script>
+  <script src="selectiveExplodeExtension.js"></script>
 </body>
 
 </html>
