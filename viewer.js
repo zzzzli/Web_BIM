@@ -5,10 +5,9 @@ var md_viewables;
 var options = {
     env: 'AutodeskProduction',
     api: 'derivativeV2', // TODO: for models uploaded to EMEA change this option to 'derivativeV2_EU'
-    getAccessToken: getForgeToken
+    getAccessToken: getForgeToken,
 };
 var documentId = 'urn:' + getUrlParameter('urn');
-// var documentId = 'urn:' + 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L1NhbXBsZS5ydnQ';
 
 // Run this when the page is loaded
 Autodesk.Viewing.Initializer(options, function onInitialized(){
@@ -48,13 +47,14 @@ function onDocumentLoadSuccess(doc) {
         var newConstructionIndex = 0;
         for(var i = 0; i < viewables.length; i++) {
             var opt = document.createElement('option');
-            console.log(viewables[i].data.name);
+            // console.log(viewables[i].data.name);
             if (viewables[i].data.name === "New Construction") newConstructionIndex = i;
             opt.innerHTML = viewables[i].data.name;
             opt.value = viewables[i].data.name;
             sel.appendChild(opt);
         }
 
+        document.getElementById("viewables").selectedIndex = newConstructionIndex;
         viewer.loadDocumentNode(doc, viewables[newConstructionIndex]).then(function(result) {
             console.log('Viewable Loaded!');
         }).catch(function(err) {
@@ -66,10 +66,9 @@ function onDocumentLoadSuccess(doc) {
       // Make the Choose viewable drop-down visible, if and only if only there are more than one viewables to display
 
       if (viewables.length > 1) {
-          var viewablesDIV= document.getElementById("viewables_dropdown");
+          var viewablesDIV = document.getElementById("viewables_dropdown");
           viewablesDIV.style.display = "block";
       }
-
     }
 }
 
