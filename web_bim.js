@@ -50,6 +50,7 @@ app.get('/api/forge/oauth/public', function (req, res) {
             // Success
             // console.log("token to viewer");
             // console.log(response);
+            // console.log(response.data.access_token);
             res.json({ access_token: response.data.access_token, expires_in: response.data.expires_in });
         })
         .catch(function (error) {
