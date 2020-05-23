@@ -12,12 +12,12 @@ findRoomExtension.prototype.load = function() {
 
   console.log("findRoomExtension loaded!");
 
-  findRoomBtn.addEventListener('click', function(){
+  findRoomBtn.addEventListener('click', function() {
 
     var userData = [document.getElementById("room").value];
 
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
-    thePromise.then(function(retValue){
+    thePromise.then(function(retValue) {
       if (!retValue) {
         console.log("Model doesn't contain property 'R0'.");
         return;

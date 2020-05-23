@@ -12,14 +12,14 @@ highlightExtension.prototype.load = function() {
 
   console.log("highlightExtension loaded!");
 
-  highlightBtn.addEventListener('click', function(){
+  highlightBtn.addEventListener('click', function() {
 
     var attr = document.getElementById("attr").value;
     var thres = parseInt(document.getElementById("threshold").value);
     var userData = [attr, thres];
 
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
-    thePromise.then(function(retValue){
+    thePromise.then(function(retValue) {
       if (!retValue) {
         console.log("Model doesn't contain property 'R0'.");
         return;
@@ -54,115 +54,114 @@ highlightExtension.prototype.load = function() {
 };
 
 function userFunction(pdb, userData) {
-    var attrIdR0 = -1;
-    var attrIdName = -1;
-    var res = [];
+  var attrIdR0 = -1;
+  var attrIdName = -1;
+  var res = [];
 
-    res.push(pdb.getObjectCount());
+  res.push(pdb.getObjectCount());
 
-    // highlight
+  // highlight
 
-    if (userData.length > 1) {
-      // Iterate over all attributes and find the index to the one we are interested in
-      pdb.enumAttributes(function(i, attrDef, attrRaw){
-          var attrName = attrDef.name;
+  if (userData.length > 1) {
+    // Iterate over all attributes and find the index to the one we are interested in
+    pdb.enumAttributes(function(i, attrDef, attrRaw) {
+      var attrName = attrDef.name;
 
-          if (attrName === 'name') {
-              attrIdName = i;
-          }
-          if (attrName === userData[0]) {
-              attrIdR0 = i;
-              return true; // to stop iterating over the remaining attributes.
-          }
-      });
-
-      // Early return is the model doesn't contain data for "R0".
-      if (attrIdName === -1 || attrIdR0 === -1) {
-        return null;
+      if (attrName === 'name') {
+        attrIdName = i;
       }
+      if (attrName === userData[0]) {
+        attrIdR0 = i;
+        return true; // to stop iterating over the remaining attributes.
+      }
+    });
 
-
-      // Now iterate over all parts to find out which one is qualified.
-      var dbIdName;
-      pdb.enumObjects(function(dbId){
-          // For each part, iterate over their properties.
-          pdb.enumObjectProperties(dbId, function(attrId, valId){
-
-              if (attrId === attrIdName) {
-                  dbIdName = pdb.getAttrValue(attrId, valId);
-              }
-              // Only process 'name' and 'R0' property.
-              // The word "Property" and "Attribute" are used interchangeably.
-              if (attrId === attrIdR0) {
-                  var value = pdb.getAttrValue(attrId, valId);
-                  // R0 larger than userData[1]
-                  if (value > userData[1]) {
-                      res.push({
-                        id: dbId,
-                        name: dbIdName,
-                        R0: value
-                      });
-                  }
-                  // Stop iterating over additional properties when "R0" is found.
-                  return true;
-              }
-          });
-      });
+    // Early return is the model doesn't contain data for "R0".
+    if (attrIdName === -1 || attrIdR0 === -1) {
+      return null;
     }
 
-    // search room
 
-    else {
-      // Iterate over all attributes and find the index to the one we are interested in
-      pdb.enumAttributes(function(i, attrDef, attrRaw){
-          var attrName = attrDef.name;
+    // Now iterate over all parts to find out which one is qualified.
+    var dbIdName;
+    pdb.enumObjects(function(dbId) {
+      // For each part, iterate over their properties.
+      pdb.enumObjectProperties(dbId, function(attrId, valId) {
 
-          if (attrName === 'name') {
-              attrIdName = i;
-          }
-          if (attrName === 'R0') {
-              attrIdR0 = i;
-              return true; // to stop iterating over the remaining attributes.
-          }
-      });
-
-      // Early return is the model doesn't contain data for "R0".
-      if (attrIdName == -1 || attrIdR0 === -1)
-        return null;
-
-      // Now iterate over all parts to find out which one is qualified.
-      var dbIdName, roomDbId;
-      pdb.enumObjects(function(dbId){
-          // For each part, iterate over their properties.
-          pdb.enumObjectProperties(dbId, function(attrId, valId){
-              if (attrId === attrIdName) {
-                  dbIdName = pdb.getAttrValue(attrId, valId);
-                  var squareBracketIndex = dbIdName.indexOf("[");
-                  if (squareBracketIndex != -1) dbIdName = dbIdName.substring(0, squareBracketIndex);
-              }
-
-              if (attrId === attrIdR0) {
-                  if (dbIdName.includes(userData[0])) {
-                      console.log(dbIdName);
-                      roomDbId = dbId;
-                      return true;
-                  }
-              }
-          });
-      });
-
-      pdb.enumObjectProperties(roomDbId, function(attrId, valId){
+        if (attrId === attrIdName) {
+          dbIdName = pdb.getAttrValue(attrId, valId);
+        }
+        // Only process 'name' and 'R0' property.
+        // The word "Property" and "Attribute" are used interchangeably.
         if (attrId === attrIdR0) {
-            var value = pdb.getAttrValue(attrId, valId);
-            res.push(roomDbId);
-            res.push(value);
-            return true;
+          var value = pdb.getAttrValue(attrId, valId);
+          // R0 larger than userData[1]
+          if (value > userData[1]) {
+            res.push({
+              id: dbId,
+              name: dbIdName,
+              R0: value
+            });
+          }
+          // Stop iterating over additional properties when "R0" is found.
+          return true;
         }
       });
-    }
+    });
+  }
 
-    // Return results
-    return res;
+  // search room
+  else {
+    // Iterate over all attributes and find the index to the one we are interested in
+    pdb.enumAttributes(function(i, attrDef, attrRaw) {
+      var attrName = attrDef.name;
+
+      if (attrName === 'name') {
+        attrIdName = i;
+      }
+      if (attrName === 'R0') {
+        attrIdR0 = i;
+        return true; // to stop iterating over the remaining attributes.
+      }
+    });
+
+    // Early return is the model doesn't contain data for "R0".
+    if (attrIdName == -1 || attrIdR0 === -1)
+      return null;
+
+    // Now iterate over all parts to find out which one is qualified.
+    var dbIdName, roomDbId;
+    pdb.enumObjects(function(dbId) {
+      // For each part, iterate over their properties.
+      pdb.enumObjectProperties(dbId, function(attrId, valId) {
+        if (attrId === attrIdName) {
+          dbIdName = pdb.getAttrValue(attrId, valId);
+          // var squareBracketIndex = dbIdName.indexOf("[");
+          // if (squareBracketIndex != -1) dbIdName = dbIdName.substring(0, squareBracketIndex);
+        }
+
+        if (attrId === attrIdR0) {
+          if (dbIdName.includes(userData[0])) {
+            console.log(dbIdName);
+            roomDbId = dbId;
+            return true;
+          }
+        }
+      });
+    });
+
+    pdb.enumObjectProperties(roomDbId, function(attrId, valId) {
+      if (attrId === attrIdR0) {
+        var value = pdb.getAttrValue(attrId, valId);
+        res.push(roomDbId);
+        res.push(value);
+        return true;
+      }
+    });
+  }
+
+  // Return results
+  return res;
 }
 
 highlightExtension.prototype.unload = function() {
