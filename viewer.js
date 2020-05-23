@@ -14,7 +14,7 @@ var documentId = 'urn:' + getUrlParameter('urn');
 Autodesk.Viewing.Initializer(options, function onInitialized(){
 
     var config3d = {
-      extensions: ['highlightExtension', 'findRoomExtension'],
+      extensions: ['highlightExtension', 'findRoomExtension', 'selectiveExplodeExtension'],
       loaderExtensions: { svf: "Autodesk.MemoryLimited" }
     };
 
