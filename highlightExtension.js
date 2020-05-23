@@ -1,3 +1,6 @@
+// This extension is used to highlight rooms with specified
+// attribute beyond certain value
+
 function highlightExtension(viewer, options) {
   Autodesk.Viewing.Extension.call(this, viewer, options);
 }

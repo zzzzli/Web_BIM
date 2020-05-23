@@ -1,3 +1,6 @@
+// This extension is used to search and select a room
+// with name
+
 function findRoomExtension(viewer, options) {
   Autodesk.Viewing.Extension.call(this, viewer, options);
 }
@@ -46,6 +49,8 @@ findRoomExtension.prototype.load = function() {
   });
   return true;
 };
+
+// userFunction is in highlightExtension.js
 
 // function userFunction(pdb, userData) {
 //     var attrIdR0 = -1;
