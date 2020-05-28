@@ -50,6 +50,24 @@
 
   </nav>
 
+  <!-- <div class="container">
+    <nav class="navbar">
+      <div class="container">
+        <ul class="navbar-list">
+          <li class="navbar-item"><img class="navbar-img" src="logo.png"/></li>
+          <li class="navbar-item"><button onClick="openView()" class="navbar-button">Open</button></li>
+          <li class="navbar-item"><button onClick="openView(1)" class="navbar-button button-primary">Level 1</button></li>
+          <li class="navbar-item"><button onClick="openView(2)" class="navbar-button button-primary">Level 2</button></li>
+          <li class="navbar-item"><button onClick="openView(3)" class="navbar-button button-primary">Level 3</button></li>
+          <li class="navbar-item"><button onClick="resetView()" class="navbar-button">Close</button></li>
+          <li class="navbar-item mobile"><input class="navbar-button" id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)"></li>
+
+          <li class="navbar-itemr"><button onClick="window.open('https://github.com/wallabyway/floor-animation')" class="navbar-button">Github</button></li>
+        </ul>
+      </div>
+    </nav>
+  </div> -->
+
   <div id="viewables_dropdown" style="display:none">
     <!-- This drop-down is not visible until there is more than one viewable to display-->
     <br>
@@ -90,6 +108,12 @@
 
   <button class="btn btn-primary" id="findRoom">Submit</button>
 
+  <div>
+    <button onClick="openView()" class="navbar-button">Open</button>
+    <button onClick="resetView()" class="navbar-button">Close</button>
+    <input class="navbar-button" id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)">
+  </div>
+
   <!-- viewer -->
   <div id="MyViewerDiv"></div>
 
@@ -102,10 +126,12 @@
   <!-- <script language="JavaScript" src="https://developer.api.autodesk.com/viewingservice/v1/viewers/viewer3D.min.js?v=v6.*"></script> -->
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
   <script src="viewer.js" charset="utf-8"></script>
+  <!-- <script src="materialExtension.js"></script> -->
   <script src="highlightExtension.js"></script>
   <script src="findRoomExtension.js"></script>
-  <script src="selectiveExplode.js"></script>
-  <script src="selectiveExplodeExtension.js"></script>
+  <script src="floorExplode.js"></script>
+  <!-- <script src="selectiveExplode.js"></script> -->
+  <!-- <script src="selectiveExplodeExtension.js"></script> -->
 </body>
 
 </html>
