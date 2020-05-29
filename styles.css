@@ -1,19 +1,29 @@
-.container-fluid {
-  padding: 3% 15%;
+body {
+  padding-top: 3rem;
+  background-color: #3f3f44;
+  color: #fff;
 }
 
-#forgeViewer {
-    border: 10%;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    background-color: #F0F8FF;
+.starter-template {
+  padding-top: 1.25rem;
 }
 
-.show-env-bg-button {
-  background: red;
+.userInput {
+  padding-top: 3rem;
+  padding-bottom: 12rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
 }
 
-.hide-env-bg-button {
-  background: blue;
+.explode {
+  padding-bottom: 3rem;
+}
+
+.roomFilter {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.roomSearch {
+  padding-top: 3rem;
 }
