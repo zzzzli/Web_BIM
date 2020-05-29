@@ -17,7 +17,7 @@ findRoomExtension.prototype.load = function() {
 
   findRoomBtn.addEventListener('click', function() {
 
-    var userData = [document.getElementById("room").value];
+    var userData = ["findRoom", document.getElementById("room").value];
 
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue) {
@@ -32,9 +32,9 @@ findRoomExtension.prototype.load = function() {
       viewer.clearThemingColors();
 
       // hide all
-      for (var i = 0; i < retValue[0]; i++) {
-        viewer.hide(i);
-      }
+      // for (var i = 0; i < retValue[0]; i++) {
+      //   viewer.hide(i);
+      // }
 
       var roomDbId = retValue[1];
       var roomAttr = retValue[2];
