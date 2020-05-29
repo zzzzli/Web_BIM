@@ -19,7 +19,7 @@ highlightExtension.prototype.load = function() {
 
     var attr = document.getElementById("attr").value;
     var thres = parseInt(document.getElementById("threshold").value);
-    var userData = [attr, thres];
+    var userData = ["highlight", attr, thres];
 
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue) {
@@ -29,6 +29,7 @@ highlightExtension.prototype.load = function() {
       }
 
       var red = new THREE.Vector4(1, 0, 0, 0.5);
+      var yellow = new THREE.Vector4(1, 1, 0, 0.5);
       var green = new THREE.Vector4(0, 0.5, 0, 0.5);
       var blue = new THREE.Vector4(0, 0, 0.5, 0.5);
 
@@ -37,9 +38,9 @@ highlightExtension.prototype.load = function() {
       // viewer.showAll();
 
       // hide all
-      for (var i = 0; i < retValue[0]; i++) {
-        viewer.hide(i);
-      }
+      // for (var i = 0; i < retValue[0]; i++) {
+      //   viewer.hide(i);
+      // }
 
       for (var i = 1; i < retValue.length; i++) {
         var R0Id = retValue[i].id;
@@ -47,7 +48,13 @@ highlightExtension.prototype.load = function() {
 
         viewer.fitToView();
         viewer.show(R0Id);
-        viewer.setThemingColor(R0Id, red);
+        if (retValue[i].R0 >= 30) {
+          viewer.setThemingColor(R0Id, red);
+        } else if (retValue[i].R0 >= 20) {
+          viewer.setThemingColor(R0Id, yellow);
+        } else if (retValue[i].R0 >= 10) {
+          viewer.setThemingColor(R0Id, green);
+        } else {}
 
         console.log('The room with R0 larger than 30 is ' + roomName + '(dbId: ' + R0Id + ')' + ' with R0:', retValue[i].R0);
       }
@@ -65,7 +72,7 @@ function userFunction(pdb, userData) {
 
   // highlight
 
-  if (userData.length > 1) {
+  if (userData[0] == "highlight") {
     // Iterate over all attributes and find the index to the one we are interested in
     pdb.enumAttributes(function(i, attrDef, attrRaw) {
       var attrName = attrDef.name;
@@ -73,7 +80,7 @@ function userFunction(pdb, userData) {
       if (attrName === 'name') {
         attrIdName = i;
       }
-      if (attrName === userData[0]) {
+      if (attrName === userData[1]) {
         attrIdR0 = i;
         return true; // to stop iterating over the remaining attributes.
       }
@@ -99,7 +106,7 @@ function userFunction(pdb, userData) {
         if (attrId === attrIdR0) {
           var value = pdb.getAttrValue(attrId, valId);
           // R0 larger than userData[1]
-          if (value > userData[1]) {
+          if (value > userData[2]) {
             res.push({
               id: dbId,
               name: dbIdName,
@@ -144,7 +151,7 @@ function userFunction(pdb, userData) {
         }
 
         if (attrId === attrIdR0) {
-          if (dbIdName.includes(userData[0])) {
+          if (dbIdName.includes(userData[1])) {
             console.log(dbIdName);
             roomDbId = dbId;
             return true;
