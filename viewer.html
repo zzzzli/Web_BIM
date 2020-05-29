@@ -17,106 +17,117 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <section id = "title">
 
-    <a class="navbar-brand" href="./index.html">BIM</a>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+      <a class="navbar-brand" href="./index.html">BIM</a>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="./index.html">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="./index.html" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buildings</a>
-          <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L1NhbXBsZS5ydnQ">Sample</a>
-            <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITV9VVFNMX0ludGVyaW9yX2RldGFjaGVkLnJ2dA">Mossman</a>
-            <a class="dropdown-item" href="./index.html">Student Union</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./index.html">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="./index.html" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buildings</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L1NhbXBsZS5ydnQ">Sample</a>
+              <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITV9VVFNMX0ludGVyaW9yX2RldGFjaGVkLnJ2dA">Mossman</a>
+              <a class="dropdown-item" href="./index.html">Student Union</a>
+            </div>
+          </li>
+        </ul>
+        <!-- <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+      </div>
+
+    </nav>
+
+    <!-- For selecting viewables -->
+
+    <!-- <div id="viewables_dropdown" style="display:none"> -->
+      <!-- This drop-down is not visible until there is more than one viewable to display-->
+      <!-- <br>
+      <br>
+      <br>
+      <label for="viewables">Choose a viewable:</label>
+      <select id="viewables" onchange="selectViewable()"></select>
+      <br>
+    </div> -->
+
+    <!-- <main role="main" class="container"> -->
+
+    <div class="row starter-template">
+
+      <div class="col-lg-3 userInput">
+
+        <div class="explode">
+            <button onClick="openView()" class="btn btn-primary">Explode</button>
+            <button onClick="resetView()" class="btn btn-primary">Unexplode</button>
+            <input id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)">
+        </div>
+
+        <!-- highlight with attributes   -->
+
+        <div class="roomFilter">
+
+          <div class="form-group">
+            <label for="Attribute-choice">Attribute</label>
+            <select class="form-control" id="attr">
+              <option>R0</option>
+              <option>Area</option>
+            </select>
           </div>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+
+          <div class="form-group">
+            <label for="Threshold-choice">Threshold</label>
+            <input list="recommended-threshold"type="text" class="form-control" id="threshold">
+
+            <datalist id = "recommended-threshold">
+              <option value="30 (high risk)"></option>
+              <option value="20 (medium risk)"></option>
+              <option value="10 (low risk)"></option>
+            </datalist>
+          </div>
+
+          <button class="btn btn-primary" id="highlightAttr">Submit</button>
+
+        </div>
+
+        <!-- Search room   -->
+
+        <div class="roomSearch">
+
+          <div class="form-group">
+            <label for="exampleFormControlTextarea2">Search Room</label>
+            <input type="text" class="form-control" id="room">
+          </div>
+
+          <button class="btn btn-primary" id="findRoom">Submit</button>
+
+        </div>
+
+      </div>
+
+      <div class="col-lg-9">
+        <!-- viewer -->
+        <div id="MyViewerDiv" class="viewer"></div>
+      </div>
+
     </div>
 
-  </nav>
+    <!-- </main> -->
 
-  <!-- <div class="container">
-    <nav class="navbar">
-      <div class="container">
-        <ul class="navbar-list">
-          <li class="navbar-item"><img class="navbar-img" src="logo.png"/></li>
-          <li class="navbar-item"><button onClick="openView()" class="navbar-button">Open</button></li>
-          <li class="navbar-item"><button onClick="openView(1)" class="navbar-button button-primary">Level 1</button></li>
-          <li class="navbar-item"><button onClick="openView(2)" class="navbar-button button-primary">Level 2</button></li>
-          <li class="navbar-item"><button onClick="openView(3)" class="navbar-button button-primary">Level 3</button></li>
-          <li class="navbar-item"><button onClick="resetView()" class="navbar-button">Close</button></li>
-          <li class="navbar-item mobile"><input class="navbar-button" id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)"></li>
-
-          <li class="navbar-itemr"><button onClick="window.open('https://github.com/wallabyway/floor-animation')" class="navbar-button">Github</button></li>
-        </ul>
-      </div>
-    </nav>
-  </div> -->
-
-  <div id="viewables_dropdown" style="display:none">
-    <!-- This drop-down is not visible until there is more than one viewable to display-->
-    <br>
-    <br>
-    <br>
-    <label for="viewables">Choose a viewable:</label>
-    <select id="viewables" onchange="selectViewable()"></select>
-    <br>
-  </div>
-
-  <!-- highlight with attributes   -->
-  <div class="form-group">
-    <label for="Attribute-choice">Attribute</label>
-    <select class="form-control" id="attr">
-      <option>R0</option>
-      <option>Area</option>
-    </select>
-  </div>
-
-  <div class="form-group">
-    <label for="Threshold-choice">Threshold</label>
-    <input list="recommended-threshold"type="text" class="form-control" id="threshold">
-
-    <datalist id = "recommended-threshold">
-      <option value="30 (high risk)"></option>
-      <option value="20 (medium risk)"></option>
-      <option value="10 (low risk)"></option>
-    </datalist>
-  </div>
-
-  <button class="btn btn-primary" id="highlightAttr">Submit</button>
-
-  <!-- Search room   -->
-  <div class="form-group">
-    <label for="exampleFormControlTextarea2">Room</label>
-    <input type="text" class="form-control" id="room">
-  </div>
-
-  <button class="btn btn-primary" id="findRoom">Submit</button>
-
-  <div>
-    <button onClick="openView()" class="navbar-button">Open</button>
-    <button onClick="resetView()" class="navbar-button">Close</button>
-    <input class="navbar-button" id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)">
-  </div>
-
-  <!-- viewer -->
-  <div id="MyViewerDiv"></div>
-
+  </section>
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <!-- JS, Popper.js -->
