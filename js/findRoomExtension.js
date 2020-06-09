@@ -27,81 +27,48 @@ findRoomExtension.prototype.load = function() {
       }
 
       var red = new THREE.Vector4(1, 0, 0, 0.5);
+      var yellow = new THREE.Vector4(1, 1, 0, 0.5);
+      var green = new THREE.Vector4(0, 0.5, 0, 0.5);
 
       // clear all highlights first
       viewer.clearThemingColors();
 
-      // hide all
+      // hide all parts
       // for (var i = 0; i < retValue[0]; i++) {
       //   viewer.hide(i);
       // }
 
-      var roomDbId = retValue[1];
-      var roomAttr = retValue[2];
-
       viewer.fitToView();
-      viewer.select(roomDbId);
-      viewer.show(roomDbId);
-      viewer.setThemingColor(roomDbId, red);
 
-      console.log('The R0 of this room is ' + roomAttr);
+      var roomDbIds = [];
+
+      for (var i = 1; i < retValue.length; i++) {
+        var roomDbId = retValue[i].id;
+        var roomAttr = retValue[i].R0;
+
+        // push all found rooms' roomDbId into this array, and select them all later
+        roomDbIds.push(roomDbId);
+
+        viewer.show(roomDbId);                      // show this part
+
+        // highlight rooms with different colors based on the value of their attribute
+        if (roomAttr >= 30) {
+          viewer.setThemingColor(roomDbId, red);
+        } else if (roomAttr >= 20) {
+          viewer.setThemingColor(roomDbId, yellow);
+        } else if (roomAttr >= 10) {
+          viewer.setThemingColor(roomDbId, green);
+        } else {}
+
+        console.log('The R0 of ' + retValue[i].name + ' is ' + roomAttr);
+      }
+
+      viewer.select(roomDbIds);     // select all found rooms
+
     });
   });
   return true;
 };
-
-// userFunction is in highlightExtension.js
-
-// function userFunction(pdb, userData) {
-//     var attrIdR0 = -1;
-//     var attrIdName = -1;
-//
-//     // Iterate over all attributes and find the index to the one we are interested in
-//     pdb.enumAttributes(function(i, attrDef, attrRaw){
-//         var attrName = attrDef.name;
-//
-//         if (attrName === 'name') {
-//             attrIdName = i;
-//         }
-//         if (attrName === 'R0') {
-//             attrIdR0 = i;
-//             return true; // to stop iterating over the remaining attributes.
-//         }
-//     });
-//
-//     // Early return is the model doesn't contain data for "R0".
-//     if (attrIdName == -1 || attrIdR0 === -1)
-//       return null;
-//
-//     // Now iterate over all parts to find out which one is qualified.
-//     var res = [];
-//     var dbIdName, roomDbId;
-//     pdb.enumObjects(function(dbId){
-//         // For each part, iterate over their properties.
-//         pdb.enumObjectProperties(dbId, function(attrId, valId){
-//             if (attrId === attrIdName) {
-//                 dbIdName = pdb.getAttrValue(attrId, valId);
-//                 if (dbIdName.includes(userData[0])) {
-//                   console.log(dbIdName);
-//                   roomDbId = dbId;
-//                   return true;
-//                 }
-//             }
-//         });
-//     });
-//
-//     pdb.enumObjectProperties(roomDbId, function(attrId, valId){
-//       if (attrId === attrIdR0) {
-//           var value = pdb.getAttrValue(attrId, valId);
-//           res.push(roomDbId);
-//           res.push(value);
-//           return true;
-//       }
-//     });
-//
-//     // Return results
-//     return res;
-// }
 
 findRoomExtension.prototype.unload = function() {
   // nothing yet
