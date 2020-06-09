@@ -6,9 +6,8 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <link rel="stylesheet" href="styles.css">
-  <!-- Custom styles for this template -->
-  <!-- <link href="./Starter Template · Bootstrap_files/starter-template.css" rel="stylesheet"> -->
+  <!-- Custom styles for this website -->
+  <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
@@ -37,24 +36,47 @@
           </div>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
     </div>
 
   </nav>
 
+  <div class="row main">
 
-  <main role="main" class="container">
+      <div class="col-lg-6 intro">
 
-    <div class="starter-template">
-      <h1>Building Infection Monitoring</h1>
-      <p class="lead">Use this website to quickly know the infection risk of building</p>
-    </div>
+        <h1 class="big-heading">Use this website to quickly know the infection risk of your building</h1>
 
-  </main>
+        <div class="building-select">
+          <div class="form-group">
+            <label for="building-select">Select a building</label>
+            <select class="form-control" id="building-select" onchange="location = this.value;">
+              <option value="">Select a building</option>
+              <option value="sample">Sample</option>
+              <option value="mossman">Mossman</option>
+              <option value="student-union">Student Union</option>
+            </select>
+          </div>
+        </div>
 
+        <!-- <a href="/api/forge/oauth">Authorize me!</a>
+        <form action="/api/forge/datamanagement/bucket/upload" enctype="multipart/form-data" method="post">
+          <div class="form-group upload">
+            <label for="model-upload">Upload your own model</label>
+            <input type="file" class="form-control-file" id="model-upload">
+          </div>
+          <button type="submit" class="btn btn-primary">Upload</button>
+        </form> -->
+        <!-- <p></p>
+        <p>Supported formats can be found here:</p>
+        <p><a target="_blank" href="https://developer.autodesk.com/en/docs/model-derivative/v2/overview/supported-translations/">https://developer.autodesk.com/en/docs/model-derivative/v2/overview/supported-translations/</a></p> -->
+
+      </div>
+
+      <div class="col-lg-6">
+        <img class="title-image" src="images/studentUnion.jpg">
+      </div>
+
+  </div>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
