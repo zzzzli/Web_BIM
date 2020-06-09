@@ -41,6 +41,7 @@ findRoomExtension.prototype.load = function() {
       viewer.fitToView();
 
       var roomDbIds = [];
+      var outputData = "Search Result: ";
 
       for (var i = 1; i < retValue.length; i++) {
         var roomDbId = retValue[i].id;
@@ -60,9 +61,11 @@ findRoomExtension.prototype.load = function() {
           viewer.setThemingColor(roomDbId, green);
         } else {}
 
-        console.log('The R0 of ' + retValue[i].name + ' is ' + roomAttr);
+        outputData += 'The R0 of ' + retValue[i].name + 'is ' + roomAttr + '. ';
+        // console.log(outputData);
       }
 
+      document.getElementById("room-data").innerHTML = outputData;
       viewer.select(roomDbIds);     // select all found rooms
 
     });
