@@ -1,0 +1,39 @@
+body {
+  background-color: #3f3f44;
+  color: #fff;
+}
+
+.main {
+  padding-top: 6rem;
+}
+
+.intro {
+  padding-top: 6rem;
+  padding-left: 6rem;
+  padding-right: 6rem;
+}
+
+.title-image {
+  width: 100%;
+  position: absolute;
+  top: 10%;
+  right: 10%;
+}
+
+.big-heading {
+  font-family: "Montserrat-Black";
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.building-select {
+  padding-top: 3rem;
+  padding-right: 21rem;
+  font-size: 1.5rem;
+}
+
+.upload {
+  padding-top: 3rem;
+  padding-right: 21rem;
+  font-size: 1.5rem;
+}

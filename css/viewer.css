@@ -1,0 +1,29 @@
+body {
+  padding-top: 3rem;
+  background-color: #3f3f44;
+  color: #fff;
+}
+
+.starter-template {
+  padding-top: 1rem;
+}
+
+.userInput {
+  padding-top: 3rem;
+  padding-bottom: 18rem;
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.explode {
+  padding-bottom: 3rem;
+}
+
+.roomFilter {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.roomSearch {
+  padding-top: 3rem;
+}
