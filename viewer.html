@@ -44,10 +44,6 @@
             </div>
           </li>
         </ul>
-        <!-- <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
       </div>
 
     </nav>
@@ -64,21 +60,26 @@
       <br>
     </div> -->
 
-    <!-- <main role="main" class="container"> -->
-
-    <div class="row starter-template">
+    <div class="row">
 
       <div class="col-lg-3 userInput">
 
         <div class="explode">
-            <button onClick="openView()" class="btn btn-primary">Explode</button>
+
+          <div>
+            <button onClick="openView()" class="btn btn-primary explode-btn">Explode</button>
             <button onClick="resetView()" class="btn btn-primary">Unexplode</button>
+          </div>
+
+          <div class="explode-slider">
             <input id="level-slider" type="range" min="0" max="1" step="0.01" value="0" oninput="onSlider(value)">
+          </div>
+
         </div>
 
         <!-- highlight with attributes   -->
 
-        <div class="roomFilter">
+        <div class="room-filter">
 
           <div class="form-group">
             <label for="Attribute-choice">Attribute</label>
@@ -105,10 +106,10 @@
 
         <!-- Search room   -->
 
-        <div class="roomSearch">
+        <div class="room-search">
 
           <div class="form-group">
-            <label for="exampleFormControlTextarea2">Search Room</label>
+            <label for="room-choice">Search Room</label>
             <input type="text" class="form-control" id="room">
           </div>
 
@@ -124,8 +125,6 @@
       </div>
 
     </div>
-
-    <!-- </main> -->
 
   </section>
   <!-- jQuery -->

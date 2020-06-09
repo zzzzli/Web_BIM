@@ -1,29 +1,28 @@
 body {
-  padding-top: 3rem;
   background-color: #3f3f44;
   color: #fff;
 }
 
-.starter-template {
+.userInput {
+  padding: 8rem 3rem 18rem 3rem;
+  /* padding-top: 10rem;
+  padding-bottom: 18rem;
+  padding-left: 3rem;
+  padding-right: 3rem; */
+}
+
+.explode-btn {
+  margin-right: 0.5rem;
+}
+
+.explode-slider {
   padding-top: 1rem;
 }
 
-.userInput {
-  padding-top: 3rem;
-  padding-bottom: 18rem;
-  padding-left: 3rem;
-  padding-right: 3rem;
+.room-filter {
+  padding-top: 4rem;
 }
 
-.explode {
-  padding-bottom: 3rem;
-}
-
-.roomFilter {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
-.roomSearch {
-  padding-top: 3rem;
+.room-search {
+  padding-top: 4rem;
 }
