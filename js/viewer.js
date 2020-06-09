@@ -1,7 +1,10 @@
+// Author: Zhouyang Li
+// Date: 6/9/2020
+// Description: this script instantiated the 3d viewer in viewer.html
+
 var viewer;
-var md_doc;
-var md_viewables;
-var isOpen = false;
+// var md_doc;
+// var md_viewables;
 
 var options = {
     env: 'AutodeskProduction',
@@ -11,10 +14,10 @@ var options = {
 var documentId = 'urn:' + getUrlParameter('urn');
 
 // Run this when the page is loaded
-Autodesk.Viewing.Initializer(options, function onInitialized(){
+Autodesk.Viewing.Initializer(options, function onInitialized() {
 
     var config3d = {
-      extensions: ['highlightExtension', 'findRoomExtension', 'materialExtension'],
+      extensions: ['highlightExtension', 'findRoomExtension'],          // viewer extensions
       loaderExtensions: { svf: "Autodesk.MemoryLimited" }
     };
 
@@ -39,24 +42,31 @@ function onDocumentLoadSuccess(doc) {
     // which references the root node of a graph that wraps each object from the Manifest JSON.
     var viewables = doc.getRoot().search({'type':'geometry'});
 
-    md_doc = doc;
-    md_viewables = viewables;
+    // md_doc = doc;
+    // md_viewables = viewables;
 
+    // viewables exist
     if (viewables) {
-        // populate the Choose viewables drop down with the viewable name
 
+        // populate the Choose viewables drop down with the viewable name
         // var sel = document.getElementById('viewables');
 
         var newConstructionIndex = 0;
         for(var i = 0; i < viewables.length; i++) {
+
             // var opt = document.createElement('option');
+
+            /* find the index of the viewable with name "New Construction", which is
+               the one we want to view. */
             if (viewables[i].data.name === "New Construction") newConstructionIndex = i;
+
             // opt.innerHTML = viewables[i].data.name;
             // opt.value = viewables[i].data.name;
             // sel.appendChild(opt);
         }
 
         // document.getElementById("viewables").selectedIndex = newConstructionIndex;
+
         viewer.loadDocumentNode(doc, viewables[newConstructionIndex]).then(function(result) {
             // viewer.restoreState(vstates[0]);
             viewer.fitToView();
@@ -113,104 +123,3 @@ function getForgeToken(callback) {
         }
     });
 }
-
-function onSlider(val) {
-  floorExplode(viewer, val, [0]);
-  viewer.impl.sceneUpdated(true);
-}
-
-function openView(level) {
-  // console.log(viewer.getState());      // help to get a view state
-  // viewer.restoreState(vstates[0]);
-  viewer.fitToView();
-  if (isOpen) return;
-  isOpen = true;
-  animate({
-    timing: makeEaseOut(circ),
-    draw(progress) { onSlider(progress) },
-    duration: 800,
-  });
-}
-
-function resetView() {
-  if (!isOpen) return;
-  isOpen = false;
-  // viewer.restoreState(vstates[0]);
-  viewer.fitToView();
-  animate({
-    timing: makeEaseOut(circ),
-    draw(progress) { onSlider(1-progress) },
-    duration: 1500,
-  });
-}
-
-
-const vstates = [
-  {
-    "seedURN": "home",
-    "objectSet": [{
-      "id": [],
-      "isolated": [],
-      "hidden": [],
-      "explodeScale": 0,
-      "idType": "lmv"
-    }],
-    "viewport": {
-      "name": "",
-      "eye": [207.30603790283203, -207.30602359771729, 207.30602645874023],
-      "target": [0, -9.5367431640625e-7, 0],
-      "up": [-0.408248300480253, 0.40824827043108136, 0.8164965859359216],
-      "worldUpVector": [0, 0, 1],
-      "pivotPoint": [0, -9.5367431640625e-7, 0],
-      "distanceToOrbit": 359.06457494658923,
-      "aspectRatio": 1.625,
-      "projection": "orthographic",
-      "isOrthographic": true,
-      "fieldOfView": 37.80748217565049
-    },
-    "renderOptions": {
-      "environment": "Boardwalk",
-      "ambientOcclusion": {
-        "enabled": true,
-        "radius": 13.123359580052492,
-        "intensity": 1
-      },
-      "toneMap": {
-        "method": 1,
-        "exposure": -7,
-        "lightMultiplier": -1e-20
-      },
-      "appearance": {
-        "ghostHidden": true,
-        "ambientShadow": true,
-        "antiAliasing": true,
-        "progressiveDisplay": true,
-        "swapBlackAndWhite": false,
-        "displayLines": true,
-        "displayPoints": true
-      }
-    },
-    "cutplanes": []
-  }, {
-    "seedURN": "exploded",
-    "objectSet": [{
-      "id": [],
-      "isolated": [],
-      "hidden": [],
-      "explodeScale": 0,
-      "idType": "lmv"
-    }],
-    "viewport": {
-      "name": "",
-      "eye": [-274.98795631207673, -551.2456417563669, 18.376081859041367],
-      "target": [-274.94317121075403, -551.1576115714628, 18.36042697592285],
-      "up": [0.07098511535741645, 0.1395292775008055, 0.9876703367611064],
-      "worldUpVector": [0, 0, 1],
-      "pivotPoint": [17.422795311668544, 39.67309215526787, 3.7083339691161967],
-      "distanceToOrbit": 653.4364492059653,
-      "aspectRatio": 1.9121887287024901,
-      "projection": "perspective",
-      "isOrthographic": false,
-      "fieldOfView": 37.80748217565049
-    }
-  },];
