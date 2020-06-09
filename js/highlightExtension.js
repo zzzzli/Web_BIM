@@ -1,5 +1,7 @@
-// This extension is used to highlight rooms with specified
-// attribute beyond certain value
+// Author: Zhouyang Li
+// Date 6/9/2020
+// Description: this extension is used to highlight rooms with specified
+// attribute beyond certain value in the 3d viewer
 
 function highlightExtension(viewer, options) {
   Autodesk.Viewing.Extension.call(this, viewer, options);
@@ -13,21 +15,36 @@ highlightExtension.prototype.load = function() {
 
   var highlightBtn = document.getElementById("highlightAttr");
 
+  // highlightExtension successfully loaded!
   console.log("highlightExtension loaded!");
 
+  // user click the submit button to highlight rooms
   highlightBtn.addEventListener('click', function() {
 
+    // read user's input attribute and threshold
     var attr = document.getElementById("attr").value;
     var thres = parseInt(document.getElementById("threshold").value);
+
+    // put the attribute and threshold into userData and pass it to userFunction
+    // so that the data can be processed in userFunction. The fisrt element in
+    // userData is to tell the userFunction that the user want to highlight rooms
     var userData = ["highlight", attr, thres];
 
+    // getPropertyDb() function get model PropertyDatabase, executeUserFunction(codem userData)
+    // allows executing user supplied function code on the worker thread against the PropertyDatabase
+    // instance. The returned value from the supplied function will be used to resolve the returned Promise.
+    // getPropertyDb: https://forge.autodesk.com/en/docs/viewer/v7/reference/Viewing/Model/
+    // executeUserFunction: https://forge.autodesk.com/en/docs/viewer/v7/reference/Private/PropDbLoader/
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue) {
+
+      // no return value from userFunction
       if (!retValue) {
-        console.log("Model doesn't contain property 'R0'.");
+        console.log("Model doesn't contain property" + attr + ".");
         return;
       }
 
+      // colors
       var red = new THREE.Vector4(1, 0, 0, 0.5);
       var yellow = new THREE.Vector4(1, 1, 0, 0.5);
       var green = new THREE.Vector4(0, 0.5, 0, 0.5);
@@ -37,7 +54,7 @@ highlightExtension.prototype.load = function() {
       viewer.clearThemingColors();
       // viewer.showAll();
 
-      // hide all
+      // hide the whole model
       // for (var i = 0; i < retValue[0]; i++) {
       //   viewer.hide(i);
       // }
@@ -46,8 +63,10 @@ highlightExtension.prototype.load = function() {
         var R0Id = retValue[i].id;
         var roomName = retValue[i].name;
 
-        viewer.fitToView();
-        viewer.show(R0Id);
+        viewer.fitToView();               // keep the model in the center of 3d viewer
+        viewer.show(R0Id);                // show rooms
+
+        // highlight rooms with different colors based on the value of their attribute
         if (retValue[i].R0 >= 30) {
           viewer.setThemingColor(R0Id, red);
         } else if (retValue[i].R0 >= 20) {
@@ -62,117 +81,6 @@ highlightExtension.prototype.load = function() {
   });
   return true;
 };
-
-function userFunction(pdb, userData) {
-  var attrIdR0 = -1;
-  var attrIdName = -1;
-  var res = [];
-
-  res.push(pdb.getObjectCount());
-
-  // highlight
-
-  if (userData[0] == "highlight") {
-    // Iterate over all attributes and find the index to the one we are interested in
-    pdb.enumAttributes(function(i, attrDef, attrRaw) {
-      var attrName = attrDef.name;
-
-      if (attrName === 'name') {
-        attrIdName = i;
-      }
-      if (attrName === userData[1]) {
-        attrIdR0 = i;
-        return true; // to stop iterating over the remaining attributes.
-      }
-    });
-
-    // Early return is the model doesn't contain data for "R0".
-    if (attrIdName === -1 || attrIdR0 === -1) {
-      return null;
-    }
-
-
-    // Now iterate over all parts to find out which one is qualified.
-    var dbIdName;
-    pdb.enumObjects(function(dbId) {
-      // For each part, iterate over their properties.
-      pdb.enumObjectProperties(dbId, function(attrId, valId) {
-
-        if (attrId === attrIdName) {
-          dbIdName = pdb.getAttrValue(attrId, valId);
-        }
-        // Only process 'name' and 'R0' property.
-        // The word "Property" and "Attribute" are used interchangeably.
-        if (attrId === attrIdR0) {
-          var value = pdb.getAttrValue(attrId, valId);
-          // R0 larger than userData[1]
-          if (value > userData[2]) {
-            res.push({
-              id: dbId,
-              name: dbIdName,
-              R0: value
-            });
-          }
-          // Stop iterating over additional properties when "R0" is found.
-          return true;
-        }
-      });
-    });
-  }
-
-  // search room
-  else {
-    // Iterate over all attributes and find the index to the one we are interested in
-    pdb.enumAttributes(function(i, attrDef, attrRaw) {
-      var attrName = attrDef.name;
-
-      if (attrName === 'name') {
-        attrIdName = i;
-      }
-      if (attrName === 'R0') {
-        attrIdR0 = i;
-        return true; // to stop iterating over the remaining attributes.
-      }
-    });
-
-    // Early return is the model doesn't contain data for "R0".
-    if (attrIdName == -1 || attrIdR0 === -1)
-      return null;
-
-    // Now iterate over all parts to find out which one is qualified.
-    var dbIdName, roomDbId;
-    pdb.enumObjects(function(dbId) {
-      // For each part, iterate over their properties.
-      pdb.enumObjectProperties(dbId, function(attrId, valId) {
-        if (attrId === attrIdName) {
-          dbIdName = pdb.getAttrValue(attrId, valId);
-          // var squareBracketIndex = dbIdName.indexOf("[");
-          // if (squareBracketIndex != -1) dbIdName = dbIdName.substring(0, squareBracketIndex);
-        }
-
-        if (attrId === attrIdR0) {
-          if (dbIdName.includes(userData[1])) {
-            console.log(dbIdName);
-            roomDbId = dbId;
-            return true;
-          }
-        }
-      });
-    });
-
-    pdb.enumObjectProperties(roomDbId, function(attrId, valId) {
-      if (attrId === attrIdR0) {
-        var value = pdb.getAttrValue(attrId, valId);
-        res.push(roomDbId);
-        res.push(value);
-        return true;
-      }
-    });
-  }
-
-  // Return results
-  return res;
-}
 
 highlightExtension.prototype.unload = function() {
   // nothing yet
