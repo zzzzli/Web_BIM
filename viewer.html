@@ -39,7 +39,7 @@
             <a class="nav-link dropdown-toggle" href="./index.html" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Buildings</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
               <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L1NhbXBsZS5ydnQ">Sample</a>
-              <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITV9VVFNMX0ludGVyaW9yX2RldGFjaGVkLnJ2dA">Mossman</a>
+              <a class="dropdown-item" href="./viewer.html?urn=dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITTMucnZ0">Mossman</a>
               <a class="dropdown-item" href="./index.html">Student Union</a>
             </div>
           </li>
@@ -84,8 +84,10 @@
           <div class="form-group">
             <label for="Attribute-choice">Attribute</label>
             <select class="form-control" id="attr">
-              <option>R0</option>
-              <option>Area</option>
+              <option>R0_COVID19</option>
+              <option>R0_Influenza</option>
+              <option>R0_Norovirus</option>
+              <option>R0_Rhinovirus</option>
             </select>
           </div>
 
@@ -94,9 +96,9 @@
             <input list="recommended-threshold"type="text" class="form-control" id="threshold">
 
             <datalist id = "recommended-threshold">
-              <option value="30 (high risk)"></option>
-              <option value="20 (medium risk)"></option>
-              <option value="10 (low risk)"></option>
+              <option value="2 (severe risk)"></option>
+              <option value="1.5 (moderate risk)"></option>
+              <option value="1 (mild risk)"></option>
             </datalist>
           </div>
 

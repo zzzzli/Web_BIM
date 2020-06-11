@@ -23,7 +23,7 @@ highlightExtension.prototype.load = function() {
 
     // read user's input attribute and threshold
     var attr = document.getElementById("attr").value;
-    var thres = parseInt(document.getElementById("threshold").value);
+    var thres = parseFloat(document.getElementById("threshold").value);
 
     // put the attribute and threshold into userData and pass it to userFunction
     // so that the data can be processed in userFunction. The fisrt element in
@@ -67,11 +67,11 @@ highlightExtension.prototype.load = function() {
         viewer.show(R0Id);                // show rooms
 
         // highlight rooms with different colors based on the value of their attribute
-        if (retValue[i].R0 >= 30) {
+        if (retValue[i].R0 >= 2) {
           viewer.setThemingColor(R0Id, red);
-        } else if (retValue[i].R0 >= 20) {
+        } else if (retValue[i].R0 >= 1.5) {
           viewer.setThemingColor(R0Id, yellow);
-        } else if (retValue[i].R0 >= 10) {
+        } else if (retValue[i].R0 >= 1) {
           viewer.setThemingColor(R0Id, green);
         } else {}
 

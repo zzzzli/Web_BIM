@@ -60,7 +60,7 @@ function userFunction(pdb, userData) {
 
           // value larger than threshold, put the id, name, attribute value of
           // the part into return array
-          if (value > userData[2]) {
+          if (value >= userData[2]) {
             res.push({
               id: dbId,
               name: dbIdName,

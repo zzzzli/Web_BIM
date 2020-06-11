@@ -53,11 +53,11 @@ findRoomExtension.prototype.load = function() {
         viewer.show(roomDbId);                      // show this part
 
         // highlight rooms with different colors based on the value of their attribute
-        if (roomAttr >= 30) {
+        if (roomAttr >= 2) {
           viewer.setThemingColor(roomDbId, red);
-        } else if (roomAttr >= 20) {
+        } else if (roomAttr >= 1.5) {
           viewer.setThemingColor(roomDbId, yellow);
-        } else if (roomAttr >= 10) {
+        } else if (roomAttr >= 1) {
           viewer.setThemingColor(roomDbId, green);
         } else {}
 
