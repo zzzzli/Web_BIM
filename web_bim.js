@@ -35,7 +35,7 @@ app.get("/sample", function(req, res){
 })
 
 app.get("/mossman", function(req, res){
-  res.redirect('/viewer.html?urn=' + "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITV9VVFNMX0ludGVyaW9yX2RldGFjaGVkLnJ2dA");
+  res.redirect('/viewer.html?urn=' + "dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6YWNkcHd3Zmp3OHprc2MwbWJpbmxpYmw1OTVwMHdhdnFfdHV0b3JpYWxfYnVja2V0L01ITTMucnZ0");
 })
 
 // Route /api/forge/oauth
