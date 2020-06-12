@@ -49,7 +49,7 @@ findRoomExtension.prototype.load = function() {
       viewer.fitToView();
 
       var roomDbIds = [];
-      var outputData = "Search Result: ";
+      var outputData = "";
 
       for (var i = 1; i < retValue.length; i++) {
         var roomDbId = retValue[i].id;
@@ -71,8 +71,8 @@ findRoomExtension.prototype.load = function() {
           viewer.setThemingColor(roomDbId, green);
         }
 
-        outputData += '<br>' + '<b>' + retValue[i].name + '</b>: ' + 'R0_COVID19: ' + retValue[i].R0COVID19 + ', '
-        + 'R0_Influenza: ' + retValue[i].R0Influenza + ', ' + 'R0_Norovirus: ' + retValue[i].R0Norovirus + ', ' + 'R0_Rhinovirus: ' + retValue[i].R0Rhinovirus + '.';
+        outputData += retValue[i].name + ': ' + 'R0_COVID19: ' + retValue[i].R0COVID19 + ', ' + 'R0_Influenza: ' + retValue[i].R0Influenza
+        + ', ' + 'R0_Norovirus: ' + retValue[i].R0Norovirus + ', ' + 'R0_Rhinovirus: ' + retValue[i].R0Rhinovirus + '.' + '\n';
         // console.log(outputData);
       }
 
