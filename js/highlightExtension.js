@@ -86,6 +86,7 @@ highlightExtension.prototype.load = function() {
         return;
       }
 
+      // no rooms in the range are found
       if (retValue.length === 1) {
         document.getElementById("invalid-input").innerHTML = "<em>No rooms in the range!</em>";
         viewer.clearThemingColors();
@@ -127,6 +128,7 @@ highlightExtension.prototype.load = function() {
 
       }
 
+      // remind the user that rooms are highlighted
       document.getElementById("invalid-input").innerHTML = "<em style='color: white;'>Rooms are highlighted in the viewer!</em>";
     });
   });
