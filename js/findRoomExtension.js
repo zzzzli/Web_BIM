@@ -21,11 +21,18 @@ findRoomExtension.prototype.load = function() {
 
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue) {
-      if (!retValue) {
-        console.log("Model doesn't contain property 'R0'.");
+
+      // if there is no return or the return just has one element,
+      // clear all the highlight and select, show "no search result"
+      // to the user
+      if (!retValue || retValue.length === 1) {
+        viewer.clearThemingColors();
+        viewer.clearSelection();
+        document.getElementById("room-data").innerHTML = "No Search Result";
         return;
       }
 
+      // four colors
       var red = new THREE.Vector4(1, 0, 0, 0.5);
       var yellow = new THREE.Vector4(1, 1, 0, 0.5);
       var green = new THREE.Vector4(0, 0.5, 0, 0.5);

@@ -113,7 +113,7 @@ function userFunction(pdb, userData) {
     });
 
     // Early return is the model doesn't contain data for "R0".
-    if (attrIdName == -1 || attrIdR0COVID19 === -1 || attrIdR0Influenza === -1 || attrIdR0Norovirus === -1 || attrIdR0Rhinovirus === -1)
+    if (attrIdName === -1 || attrIdR0COVID19 === -1 || attrIdR0Influenza === -1 || attrIdR0Norovirus === -1 || attrIdR0Rhinovirus === -1)
       return null;
 
     // Now iterate over all parts to find out which one is qualified.
