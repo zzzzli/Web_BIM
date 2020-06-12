@@ -4,7 +4,7 @@ body {
 }
 
 .userInput {
-  padding: 9rem 3rem 15rem 3rem;
+  padding: 6rem 1.5rem 1.5rem 3rem;
   /* padding-top: 10rem;
   padding-bottom: 18rem;
   padding-left: 3rem;
@@ -20,13 +20,17 @@ body {
 }
 
 .room-filter {
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 
 .room-search {
-  padding-top: 4rem;
+  padding-top: 3rem;
 }
 
 .output {
   padding-top: 1.5rem;
+}
+
+.viewer {
+  padding-top: 3rem;
 }
