@@ -23,12 +23,27 @@ highlightExtension.prototype.load = function() {
 
     // read user's input attribute and threshold
     var attr = document.getElementById("attr").value;
-    var thres = parseFloat(document.getElementById("threshold").value);
+    var thStr = document.getElementById("threshold").value;
 
     // put the attribute and threshold into userData and pass it to userFunction
     // so that the data can be processed in userFunction. The fisrt element in
     // userData is to tell the userFunction that the user want to highlight rooms
-    var userData = ["highlight", attr, thres];
+    var userData = ["highlight", attr];
+
+    // parse user's input threshold
+    if (thStr.indexOf(">") != -1) {
+      thStr = thStr.replace ( /[^\d.]/g, '' );
+      userData.push(parseFloat(thStr));
+      userData.push(Number.MAX_VALUE);
+    } else if (thStr.indexOf("-") != -1) {
+      var thStr1 = thStr.substring(0, thStr.indexOf("-"));
+      var thStr2 = thStr.substring(thStr.indexOf("-") + 1);
+      thStr1 = thStr1.replace ( /[^\d.]/g, '' );
+      thStr2 = thStr2.replace ( /[^\d.]/g, '' );
+      userData.push(parseFloat(thStr1));
+      userData.push(parseFloat(thStr2));
+    } else {
+    }
 
     // getPropertyDb() function get model PropertyDatabase, executeUserFunction(codem userData)
     // allows executing user supplied function code on the worker thread against the PropertyDatabase
