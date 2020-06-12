@@ -22,10 +22,14 @@ findRoomExtension.prototype.load = function() {
     var thePromise = viewer.model.getPropertyDb().executeUserFunction(userFunction, userData);
     thePromise.then(function(retValue) {
 
-      // if there is no return or the return just has one element,
-      // clear all the highlight and select, show "no search result"
-      // to the user
-      if (!retValue || retValue.length === 1) {
+      if (!retValue) {
+        document.getElementById("room-data").innerHTML = "The model does not contain viruses' R0 data";
+        return;
+      }
+
+      // the return just has one element, clear all the highlight and selection
+      // show "no search result" to the user
+      if (retValue.length === 1) {
         viewer.clearThemingColors();
         viewer.clearSelection();
         document.getElementById("room-data").innerHTML = "No Search Result";
