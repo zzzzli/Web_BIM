@@ -76,8 +76,8 @@ findRoomExtension.prototype.load = function() {
         // console.log(outputData);
       }
 
-      document.getElementById("room-data").innerHTML = outputData;
-      viewer.select(roomDbIds);     // select all found rooms
+      document.getElementById("room-data").innerHTML = outputData;      // show the output to user
+      viewer.select(roomDbIds);                                         // select all found rooms
 
     });
   });

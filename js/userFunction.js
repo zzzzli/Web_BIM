@@ -148,6 +148,7 @@ function userFunction(pdb, userData) {
     // R0 attribute, push it into return array
     for (var i = 0; i < roomDbId.length; i++) {
 
+      // initial R0 of four viruses
       var R0COVID19 = -1;
       var R0Influenza = -1;
       var R0Norovirus = -1;
@@ -155,6 +156,7 @@ function userFunction(pdb, userData) {
 
       pdb.enumObjectProperties(roomDbId[i].id, function(attrId, valId) {
 
+        // get the R0 of four viruses
         if (attrId === attrIdR0COVID19) {
           R0COVID19 = pdb.getAttrValue(attrId, valId);
         } else if (attrId === attrIdR0Influenza) {
@@ -167,6 +169,7 @@ function userFunction(pdb, userData) {
 
       });
 
+      // if all the R0 of viruses are found, push into the result array
       if (R0COVID19 !== -1 && R0Influenza !== -1 && R0Norovirus !== -1 && R0Rhinovirus !== -1) {
         res.push({
           id: roomDbId[i].id,
