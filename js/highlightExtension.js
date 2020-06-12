@@ -72,8 +72,10 @@ highlightExtension.prototype.load = function() {
         } else if (retValue[i].R0 >= 1.5) {
           viewer.setThemingColor(R0Id, yellow);
         } else if (retValue[i].R0 >= 1) {
+          viewer.setThemingColor(R0Id, blue);
+        } else {
           viewer.setThemingColor(R0Id, green);
-        } else {}
+        }
 
         console.log('The room with R0 larger than 30 is ' + roomName + '(dbId: ' + R0Id + ')' + ' with R0:', retValue[i].R0);
       }

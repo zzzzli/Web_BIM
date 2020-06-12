@@ -6,6 +6,10 @@
 
 function userFunction(pdb, userData) {
   var attrIdR0 = -1;                      // the attr id of R0 attribute
+  var attrIdR0COVID19 = -1;               // the attr id of R0 attribute
+  var attrIdR0Influenza = -1;             // the attr id of R0 attribute
+  var attrIdR0Norovirus = -1;             // the attr id of R0 attribute
+  var attrIdR0Rhinovirus = -1;            // the attr id of R0 attribute
   var attrIdName = -1;                    // the attr id of name attribute
   var res = [];                           // return array
 
@@ -87,15 +91,29 @@ function userFunction(pdb, userData) {
         attrIdName = i;
       }
 
-      // find the attr id with name "R0"
-      if (attrName === 'R0') {
-        attrIdR0 = i;
-        return true;              // to stop iterating over the remaining attributes.
+      // find the attr id with name "R0_COVID19"
+      if (attrName === 'R0_COVID19') {
+        attrIdR0COVID19 = i;
+      }
+
+      // find the attr id with name "R0_Influenza"
+      if (attrName === 'R0_Influenza') {
+        attrIdR0Influenza = i;
+      }
+
+      // find the attr id with name "R0_Norovirus"
+      if (attrName === 'R0_Norovirus') {
+        attrIdR0Norovirus = i;
+      }
+
+      // find the attr id with name "R0_Rhinovirus"
+      if (attrName === 'R0_Rhinovirus') {
+        attrIdR0Rhinovirus = i;
       }
     });
 
     // Early return is the model doesn't contain data for "R0".
-    if (attrIdName == -1 || attrIdR0 === -1)
+    if (attrIdName == -1 || attrIdR0COVID19 === -1 || attrIdR0Influenza === -1 || attrIdR0Norovirus === -1 || attrIdR0Rhinovirus === -1)
       return null;
 
     // Now iterate over all parts to find out which one is qualified.
@@ -129,18 +147,36 @@ function userFunction(pdb, userData) {
     // For the found parts, iterate over their properties. If the part has
     // R0 attribute, push it into return array
     for (var i = 0; i < roomDbId.length; i++) {
+
+      var R0COVID19 = -1;
+      var R0Influenza = -1;
+      var R0Norovirus = -1;
+      var R0Rhinovirus = -1;
+
       pdb.enumObjectProperties(roomDbId[i].id, function(attrId, valId) {
 
-        if (attrId === attrIdR0) {
-          var value = pdb.getAttrValue(attrId, valId);
-          res.push({
-            id: roomDbId[i].id,
-            name: roomDbId[i].name,
-            R0: value
-          });
-          return true;
-        }
+        if (attrId === attrIdR0COVID19) {
+          R0COVID19 = pdb.getAttrValue(attrId, valId);
+        } else if (attrId === attrIdR0Influenza) {
+          R0Influenza = pdb.getAttrValue(attrId, valId);
+        } else if (attrId === attrIdR0Norovirus) {
+          R0Norovirus = pdb.getAttrValue(attrId, valId);
+        } else if (attrId === attrIdR0Rhinovirus) {
+          R0Rhinovirus = pdb.getAttrValue(attrId, valId);
+        } else {}
+
       });
+
+      if (R0COVID19 !== -1 && R0Influenza !== -1 && R0Norovirus !== -1 && R0Rhinovirus !== -1) {
+        res.push({
+          id: roomDbId[i].id,
+          name: roomDbId[i].name,
+          R0COVID19: R0COVID19,
+          R0Influenza: R0Influenza,
+          R0Norovirus: R0Norovirus,
+          R0Rhinovirus: R0Rhinovirus
+        });
+      }
     }
   }
 

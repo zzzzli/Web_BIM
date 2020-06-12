@@ -29,6 +29,7 @@ findRoomExtension.prototype.load = function() {
       var red = new THREE.Vector4(1, 0, 0, 0.5);
       var yellow = new THREE.Vector4(1, 1, 0, 0.5);
       var green = new THREE.Vector4(0, 0.5, 0, 0.5);
+      var blue = new THREE.Vector4(0, 0, 0.5, 0.5);
 
       // clear all highlights first
       viewer.clearThemingColors();
@@ -45,7 +46,7 @@ findRoomExtension.prototype.load = function() {
 
       for (var i = 1; i < retValue.length; i++) {
         var roomDbId = retValue[i].id;
-        var roomAttr = retValue[i].R0;
+        var roomAttr = retValue[i].R0COVID19;
 
         // push all found rooms' roomDbId into this array, and select them all later
         roomDbIds.push(roomDbId);
@@ -58,10 +59,13 @@ findRoomExtension.prototype.load = function() {
         } else if (roomAttr >= 1.5) {
           viewer.setThemingColor(roomDbId, yellow);
         } else if (roomAttr >= 1) {
+          viewer.setThemingColor(roomDbId, blue);
+        } else {
           viewer.setThemingColor(roomDbId, green);
-        } else {}
+        }
 
-        outputData += 'The R0 of ' + retValue[i].name + 'is ' + roomAttr + '. ';
+        outputData += 'The R0COVID19, R0Influenza, R0Norovirus, R0Rhinovirus of ' + retValue[i].name + 'is '
+         + retValue[i].R0COVID19 + ', ' + retValue[i].R0Influenza + ', ' + retValue[i].R0Norovirus + ', ' + retValue[i].R0Rhinovirus + '. ';
         // console.log(outputData);
       }
 
