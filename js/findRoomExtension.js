@@ -64,8 +64,8 @@ findRoomExtension.prototype.load = function() {
           viewer.setThemingColor(roomDbId, green);
         }
 
-        outputData += 'The R0COVID19, R0Influenza, R0Norovirus, R0Rhinovirus of ' + retValue[i].name + 'is '
-         + retValue[i].R0COVID19 + ', ' + retValue[i].R0Influenza + ', ' + retValue[i].R0Norovirus + ', ' + retValue[i].R0Rhinovirus + '. ';
+        outputData += '<br>' + '<b>' + retValue[i].name + '</b>: ' + 'R0_COVID19: ' + retValue[i].R0COVID19 + ', '
+        + 'R0_Influenza: ' + retValue[i].R0Influenza + ', ' + 'R0_Norovirus: ' + retValue[i].R0Norovirus + ', ' + 'R0_Rhinovirus: ' + retValue[i].R0Rhinovirus + '.';
         // console.log(outputData);
       }
 
