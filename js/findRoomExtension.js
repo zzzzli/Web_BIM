@@ -81,6 +81,7 @@ findRoomExtension.prototype.load = function() {
       }
 
       document.getElementById("room-data").innerHTML = outputData;      // show the output to user
+      document.getElementById("invalid-input").innerHTML = "";      // show the output to user
       viewer.select(roomDbIds);                                         // select all found rooms
 
     });
