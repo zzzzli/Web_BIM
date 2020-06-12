@@ -24,7 +24,7 @@ body {
 }
 
 .room-search {
-  padding-top: 3rem;
+  padding-top: 2rem;
 }
 
 .output {
@@ -33,4 +33,10 @@ body {
 
 .viewer {
   padding-top: 3rem;
+}
+
+#invalid-input {
+  color: red;
+  margin: 0;
+  padding-top: 0.5rem;
 }

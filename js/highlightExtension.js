@@ -33,16 +33,42 @@ highlightExtension.prototype.load = function() {
     // parse user's input threshold
     if (thStr.indexOf(">") != -1) {
       thStr = thStr.replace ( /[^\d.]/g, '' );
-      userData.push(parseFloat(thStr));
-      userData.push(Number.MAX_VALUE);
+
+      // if user's input is not valid, return
+      // is valid, execute userFunction
+      if (isNaN(parseFloat(thStr))) {
+        document.getElementById("invalid-input").innerHTML = "<em>Invalid threshold input!</em>";
+        viewer.clearThemingColors();
+        return;
+      } else {
+        userData.push(parseFloat(thStr));
+        userData.push(Number.MAX_VALUE);
+      }
+
     } else if (thStr.indexOf("-") != -1) {
       var thStr1 = thStr.substring(0, thStr.indexOf("-"));
       var thStr2 = thStr.substring(thStr.indexOf("-") + 1);
       thStr1 = thStr1.replace ( /[^\d.]/g, '' );
       thStr2 = thStr2.replace ( /[^\d.]/g, '' );
-      userData.push(parseFloat(thStr1));
-      userData.push(parseFloat(thStr2));
+      var th1 = parseFloat(thStr1);
+      var th2 = parseFloat(thStr2);
+
+      // if user's input is not valid, return
+      // is valid, execute userFunction
+      if (isNaN(th1) || isNaN(th2) || th1 > th2) {
+        document.getElementById("invalid-input").innerHTML = "<em>Invalid threshold input!</em>";
+        viewer.clearThemingColors();
+        return;
+      } else {
+        userData.push(parseFloat(thStr1));
+        userData.push(parseFloat(thStr2));
+      }
+
     } else {
+      // user's input is not valid, return
+      document.getElementById("invalid-input").innerHTML = "<em>Invalid threshold input!</em>";
+      viewer.clearThemingColors();
+      return;
     }
 
     // getPropertyDb() function get model PropertyDatabase, executeUserFunction(codem userData)
@@ -55,7 +81,14 @@ highlightExtension.prototype.load = function() {
 
       // no return value from userFunction
       if (!retValue) {
-        console.log("Model doesn't contain property" + attr + ".");
+        document.getElementById("invalid-input").innerHTML = "Model doesn't contain property " + attr + ".";
+        viewer.clearThemingColors();
+        return;
+      }
+
+      if (retValue.length === 1) {
+        document.getElementById("invalid-input").innerHTML = "<em>No rooms in the range!</em>";
+        viewer.clearThemingColors();
         return;
       }
 
@@ -92,8 +125,9 @@ highlightExtension.prototype.load = function() {
           viewer.setThemingColor(R0Id, green);
         }
 
-        console.log('The room with R0 larger than 30 is ' + roomName + '(dbId: ' + R0Id + ')' + ' with R0:', retValue[i].R0);
       }
+
+      document.getElementById("invalid-input").innerHTML = "<em style='color: white;'>Rooms are highlighted in the viewer!</em>";
     });
   });
   return true;
